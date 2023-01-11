@@ -1,0 +1,52 @@
+﻿@model List<VNPT_TTS_PROJECT.Models.Reservation>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Book Yours";
+    ViewBag.ActiveBookYours = "active";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 style="margin: 130px 0px 50px 0px;">Your Booking</h2>
+            <table class="table p-3 mt-3 ">
+                <thead class="thead-dark  bg-info bg-opacity-75">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Full Name</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Number Of People</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Destination</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var usernameSS = HttpContext.Current.Session["username"];
+                        int dem = 0;
+                        foreach (var item in Model)
+                        {
+                            ++dem;
+                            if (item.username == usernameSS.ToString())
+                            {
+                                <tr style="line-height:55px;" class="bg-info @{if (dem % 2 != 0)
+                                    { @Html.Raw("bg-opacity-25") }
+                                        else {@Html.Raw("bg-opacity-10") } }">
+                                    <td>@dem</td>
+                                    <td>@item.fullName</td>
+                                    <td>@item.phone</td>
+                                    <td>@item.numOfPeople</td>
+                                    <td>@String.Format("dd/MM/yyyy", item.date)</td>
+                                    <td>
+                                        <img style="width: 50px; height:auto;" src="~/Assets/@item.Tour.url" />
+                                        @item.Tour.destination , @item.Tour.Place.title
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

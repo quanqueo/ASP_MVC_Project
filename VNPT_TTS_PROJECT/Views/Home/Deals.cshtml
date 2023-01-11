@@ -1,0 +1,133 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Deals";
+    ViewBag.ActiveDeals = "active";
+    var listTourSearch = ViewBag.listToursSearch;
+    var listPlaces = ViewBag.listPlaces;
+}
+
+<div class="page-heading">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>Discover Our Weekly Offers</h4>
+                <h2>Amazing Prices &amp; More</h2>
+                <div class="border-button"><a href="~/Home/About">Discover More</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="search-form">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <form id="search-form" name="gs" method="post" role="search" action="#">
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <h4>Sort Deals By:</h4>
+                        </div>
+                        <div class="col-lg-4">
+                            <fieldset>
+                                <select name="idP" class="form-select" aria-label="Default select example" id="chooseLocation" onChange="this.form.click()">
+                                    <option selected>Destinations</option>
+                                    @{ 
+                                        foreach (var item in listPlaces)
+                                        {
+                                            <option value="@item.idP">@item.title</option>
+                                        }
+                                    }
+                                </select>
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-4">
+                            <fieldset>
+                                <select name="price" class="form-select" aria-label="Default select example" id="choosePrice" onChange="this.form.click()">
+                                    <option value="0-0" selected>Price Range</option>
+                                    <option value="100-250">$100 - $250</option>
+                                    <option value="250-500">$250 - $500</option>
+                                    <option value="500-1000">$500 - $1,000</option>
+                                    <option value="1000-2500">$1,000 - $2,500</option>
+                                    <option value="2500-1000000">$2,500+</option>
+                                </select>
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-2">
+                            <fieldset>
+                                <button type="submit" class="border-button">Search Results</button>
+                            </fieldset>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="amazing-deals">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="section-heading text-center">
+                    <h2>Best Weekly Offers In Each City</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                </div>
+            </div>
+            @{
+                foreach (var item in listTourSearch)
+                {
+                    var deal = item.detailDeal.Split('|');
+                    var days = item.detailDeal.ToCharArray();
+                    <div class="col-lg-6 col-sm-6">
+                        <div class="item">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="image">
+                                        <img src="~/Assets/@item.url" alt="">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 align-self-center">
+                                    <div class="content">
+                                        <span class="info">*Limited Offer Today</span>
+                                        <h4></h4>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <i class="fa fa-clock"></i>
+                                                <span class="list">@days[0] Days</span>
+                                            </div>
+                                            <div class="col-6">
+                                                <i class="fa fa-map"></i>
+                                                <span class="list">@deal[2]</span>
+                                            </div>
+                                        </div>
+                                        <p class="text-black" style="font-size: 18px;">@item.destination - @String.Format("{0:C0}", item.price_pPerson)</p>
+                                        <div class="main-button">
+                                            <a href="reservation.html">Make a Reservation</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            <div class="col-lg-12">
+                <ul class="page-numbers">
+                    <li><a href="#"><i class="fa fa-arrow-left"></i></a></li>
+                    <li><a href="#">1</a></li>
+                    <li class="active"><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#"><i class="fa fa-arrow-right"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(".option").click(function () {
+            $(".option").removeClass("active");
+            $(this).addClass("active");
+        });
+    </script>
+}

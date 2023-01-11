@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.Title = "ListPlaces";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    VNPT_TTS_PROJECT.Models.thuctapProjectEntities db = new VNPT_TTS_PROJECT.Models.thuctapProjectEntities();
+    var listPlaces = db.Places.ToList();
+}
+<style>
+    td:last-child{
+        width: 14%;
+    }
+</style>
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">Places</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a href="~/Admin/Home">Dashboard</a></li>
+                <li class="breadcrumb-item active">Places</li>
+            </ol>
+            <div class="card mb-4">
+                <div class="card-header justify-content-between d-flex align-items-center">
+                    <div>
+                        <i class="fas fa-table me-1"></i>
+                        List Places
+                    </div>
+                    <a class="btn btn-success" href="~/Admin/Home/AddPlace">Add Places</a>
+                </div>
+                <div class="card-body">
+                    <table id="datatablesSimple">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Place</th>
+                                <th>Img</th>
+                                <th>Description</th>
+                                <th>Price</th>
+                                <th>Area</th>
+                                <th>Followers</th>
+                                <th>Continent</th>
+                                <th>Function</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>ID</th>
+                                <th>Place</th>
+                                <th>Img</th>
+                                <th>Description</th>
+                                <th>Price</th>
+                                <th>Area</th>
+                                <th>Followers</th>
+                                <th>Continent</th>
+                                <th>Function</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @{
+                                foreach (var item in listPlaces)
+                                {
+                                    <tr>
+                                        <td>@item.idP</td>
+                                        <td>@item.title</td>
+                                        <td><img style="width:100px;" src="~/Assets/@item.url"/></td>
+                                        <td>@item.description</td>
+                                        <td>@String.Format("{0:C0}", item.price)</td>
+                                        <td>@String.Format("{0:n0}", item.area) KM</td>
+                                        <td>@item.followers M</td>
+                                        <td>@item.Continent.name</td>
+                                        <td>
+                                            <a class="btn btn-warning" href="~/Admin/Home/EditPlace?id=@item.idP">Edit</a> |
+                                            <a class="btn btn-danger" href="~/Admin/Home/DeletePlace?id=@item.idP">Delete</a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>

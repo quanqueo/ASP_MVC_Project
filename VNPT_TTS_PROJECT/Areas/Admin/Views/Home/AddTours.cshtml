@@ -1,0 +1,112 @@
+﻿@model VNPT_TTS_PROJECT.Models.Tour
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "AddTours";
+}
+<style>
+    .form-group + .form-group {
+        margin-top: 10px;
+    }
+</style>
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">Tours</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a href="~/Admin/Home">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="~/Admin/Home/ListTours">List Tours</a></li>
+                <li class="breadcrumb-item active">Add Tour</li>
+            </ol>
+
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <h4>Tour</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.idTuor,"ID", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.idTuor, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.idTuor, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.destination,"Địa điểm", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.destination, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.destination, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.followers,"Người theo dõi", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.followers, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.followers, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.price_pPerson,"Giá / 1 người", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.price_pPerson, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.price_pPerson, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.url,"Ảnh địa điểm", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.url, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.url, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.detailDeal,"Chi tiết gói", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.detailDeal, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.detailDeal, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @{ VNPT_TTS_PROJECT.Models.thuctapProjectEntities db = new VNPT_TTS_PROJECT.Models.thuctapProjectEntities();
+                            var listPlace = db.Places.ToList();
+                        }
+                        <label class="control-label col-md-2">Places</label><br>    
+                        <select name="idP"  class="w-25 form-select">
+                            @{
+                                foreach (var item in listPlace)
+                                {
+
+                                    <option value="@item.idP">@item.title</option>
+                                }
+                            }
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.thumbCityUrl,"Ảnh thành phố", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.thumbCityUrl, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.thumbCityUrl, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group my-4">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Create" class="btn btn-success w-25 px-5 py-3" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </main>

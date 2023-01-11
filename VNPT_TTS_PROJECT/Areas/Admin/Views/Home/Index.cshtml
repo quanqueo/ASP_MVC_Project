@@ -1,0 +1,170 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    VNPT_TTS_PROJECT.Models.thuctapProjectEntities db = new VNPT_TTS_PROJECT.Models.thuctapProjectEntities();
+    var listPlaces = db.Places.ToList();
+    var listTours = db.Tours.ToList();
+}
+
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">TRANG CHỦ</h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item active">Dashboard</li>
+                    </ol>
+                    <div class="row">
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-primary text-white mb-4">
+                                <div class="card-body">WEBSITE</div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <a class="small text-white stretched-link" href="~/Home">Go to Website</a>
+                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-warning text-white mb-4">
+                                <div class="card-body">PLACES</div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <a class="small text-white stretched-link" href="~/Admin/Home/ListPlaces">View Details</a>
+                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-success text-white mb-4">
+                                <div class="card-body">TOURS</div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <a class="small text-white stretched-link" href="~/Admin/Home/ListTours">View Details</a>
+                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-danger text-white mb-4">
+                                <div class="card-body">Đăng Xuất</div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <a class="small text-white stretched-link" href="~/Admin/Home/Logout">Logout</a>
+                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="card mb-4">
+                                <div class="card-header fw-bold">
+                                    <i class="fas fa-table me-1"></i>
+                                    LIST PLACES
+                                </div>
+                                <div class="card-body">
+                                    <table id="datatablesSimple">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Place</th>
+                                                <th>Img</th>
+                                                <th>Description</th>
+                                                <th>Price</th>
+                                                <th>Area</th>
+                                                <th>Followers</th>
+                                                <th>Continent</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Place</th>
+                                                <th>Img</th>
+                                                <th>Description</th>
+                                                <th>Price</th>
+                                                <th>Area</th>
+                                                <th>Followers</th>
+                                                <th>Continent</th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            @{
+                                                foreach (var item in listPlaces)
+                                                {
+                                                    <tr>
+                                                        <td>@item.idP</td>
+                                                        <td>@item.title</td>
+                                                        <td><img style="width:100px;" src="~/Assets/@item.url" /></td>
+                                                        <td>@Html.Raw(item.description)</td>
+                                                        <td>@String.Format("{0:C0}", item.price)</td>
+                                                        <td>@String.Format("{0:n0}", item.area) KM</td>
+                                                        <td>@item.followers M</td>
+                                                        <td>@item.Continent.name</td>
+                                                    </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*<div class="col-xl-12">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-table me-1"></i>
+                                    List Tours
+                                </div>
+                                <div class="card-body">
+                                    <table id="datatablesSimple">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Destination</th>
+                                                <th>Followers</th>
+                                                <th>Price/1</th>
+                                                <th>Img Des</th>
+                                                <th>Detail Deals</th>
+                                                <th>Place</th>
+                                                <th>Img City</th>
+                                                <th>Function</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Destination</th>
+                                                <th>Followers</th>
+                                                <th>Price/1</th>
+                                                <th>Img Des</th>
+                                                <th>Detail Deals</th>
+                                                <th>Place</th>
+                                                <th>Img City</th>
+                                                <th>Function</th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            @{
+                                                foreach (var item in listTours)
+                                                {
+                                                    <tr>
+                                                        <td>@item.idTuor</td>
+                                                        <td>@item.destination</td>
+                                                        <td>@item.followers</td>
+                                                        <td>@item.price_pPerson</td>
+                                                        <td><img style="width: 100px;" src="~/Assets/@item.url" /></td>
+                                                        <td>@item.detailDeal</td>
+                                                        <td>@item.Place.title</td>
+                                                        <td><img style="width: 100px;" src="~/Assets/@item.thumbCityUrl" /></td>
+                                                        <td>
+                                                            <a class="btn btn-warning" href="~/Admin/Home/EditTours?id=@item.idTuor">Edit</a> |
+                                                            <a class="btn btn-danger" href="~/Admin/Home/DeleteTour?id=@item.idTuor">Delete</a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>*@
+                    </div>
+                </div>
+            </main>
+            
+

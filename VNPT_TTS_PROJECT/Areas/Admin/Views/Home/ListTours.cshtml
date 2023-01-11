@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.Title = "ListTours";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    VNPT_TTS_PROJECT.Models.thuctapProjectEntities db = new VNPT_TTS_PROJECT.Models.thuctapProjectEntities();
+    var listTours = db.Tours.ToList();
+}
+<style>
+    td:last-child {
+        width: 14%;
+    }
+</style>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">Tours</h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item"><a href="~/Admin/Home">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Tours</li>
+                    </ol>
+                    <div class="card mb-4">
+                        <div class="card-header justify-content-between d-flex align-items-center">
+                            <div>
+                                <i class="fas fa-table me-1"></i>
+                                List Tours
+                            </div>
+                            <a class="btn btn-success" href="~/Admin/Home/AddTours">Add Tours</a>
+                        </div>
+                        <div class="card-body">
+                            <table id="datatablesSimple">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Destination</th>
+                                        <th>Followers</th>
+                                        <th>Price/1</th>
+                                        <th>Img Des</th>
+                                        <th>Detail Deals</th>
+                                        <th>Place</th>
+                                        <th>Img City</th>
+                                        <th>Function</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Destination</th>
+                                        <th>Followers</th>
+                                        <th>Price/1</th>
+                                        <th>Img Des</th>
+                                        <th>Detail Deals</th>
+                                        <th>Place</th>
+                                        <th>Img City</th>
+                                        <th>Function</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    @{
+                                        foreach (var item in listTours)
+                                        {
+                                            <tr>
+                                                <td>@item.idTuor</td>
+                                                <td>@item.destination</td>
+                                                <td>@item.followers</td>
+                                                <td>@item.price_pPerson</td>
+                                                <td><img style="width: 100px;" src="~/Assets/@item.url" /></td>
+                                                <td>@item.detailDeal</td>
+                                                <td>@item.Place.title</td>
+                                                <td><img style="width: 100px;" src="~/Assets/@item.thumbCityUrl" /></td>
+                                                <td>
+                                                    <a class="btn btn-warning" href="~/Admin/Home/EditTours?id=@item.idTuor">Edit</a> |
+                                                    <a class="btn btn-danger" href="~/Admin/Home/DeleteTour?id=@item.idTuor">Delete</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>

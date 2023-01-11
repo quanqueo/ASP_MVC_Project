@@ -1,0 +1,358 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="thuctapProjectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Continents">
+          <Key>
+            <PropertyRef Name="idC" />
+          </Key>
+          <Property Name="idC" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="LOGIN">
+          <Key>
+            <PropertyRef Name="username" />
+          </Key>
+          <Property Name="username" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="mod" Type="bit" />
+          <Property Name="email" Type="nvarchar" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="Place">
+          <Key>
+            <PropertyRef Name="idP" />
+          </Key>
+          <Property Name="idP" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="100" />
+          <Property Name="url" Type="nvarchar" MaxLength="100" />
+          <Property Name="description" Type="nvarchar" MaxLength="500" />
+          <Property Name="price" Type="int" />
+          <Property Name="area" Type="float" />
+          <Property Name="followers" Type="float" />
+          <Property Name="idC" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reservation">
+          <Key>
+            <PropertyRef Name="idR" />
+          </Key>
+          <Property Name="idR" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fullName" Type="nvarchar" MaxLength="50" />
+          <Property Name="phone" Type="nvarchar" MaxLength="12" />
+          <Property Name="numOfPeople" Type="int" />
+          <Property Name="date" Type="date" />
+          <Property Name="idTour" Type="nvarchar" MaxLength="10" />
+          <Property Name="username" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Tours">
+          <Key>
+            <PropertyRef Name="idTuor" />
+          </Key>
+          <Property Name="idTuor" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="destination" Type="nvarchar" MaxLength="100" />
+          <Property Name="followers" Type="float" />
+          <Property Name="price_pPerson" Type="float" />
+          <Property Name="url" Type="nvarchar" MaxLength="100" />
+          <Property Name="detailDeal" Type="nvarchar" MaxLength="100" />
+          <Property Name="idP" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="thumbCityUrl" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK_Place_Continents">
+          <End Role="Continents" Type="Self.Continents" Multiplicity="1" />
+          <End Role="Place" Type="Self.Place" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Continents">
+              <PropertyRef Name="idC" />
+            </Principal>
+            <Dependent Role="Place">
+              <PropertyRef Name="idC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservation_Login">
+          <End Role="LOGIN" Type="Self.LOGIN" Multiplicity="0..1" />
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOGIN">
+              <PropertyRef Name="username" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservation_Tours">
+          <End Role="Tours" Type="Self.Tours" Multiplicity="0..1" />
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tours">
+              <PropertyRef Name="idTuor" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="idTour" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tours_Place">
+          <End Role="Place" Type="Self.Place" Multiplicity="1" />
+          <End Role="Tours" Type="Self.Tours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="idP" />
+            </Principal>
+            <Dependent Role="Tours">
+              <PropertyRef Name="idP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="thuctapProjectModelStoreContainer">
+          <EntitySet Name="Continents" EntityType="Self.Continents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LOGIN" EntityType="Self.LOGIN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Place" EntityType="Self.Place" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reservation" EntityType="Self.Reservation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tours" EntityType="Self.Tours" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Place_Continents" Association="Self.FK_Place_Continents">
+            <End Role="Continents" EntitySet="Continents" />
+            <End Role="Place" EntitySet="Place" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservation_Login" Association="Self.FK_Reservation_Login">
+            <End Role="LOGIN" EntitySet="LOGIN" />
+            <End Role="Reservation" EntitySet="Reservation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservation_Tours" Association="Self.FK_Reservation_Tours">
+            <End Role="Tours" EntitySet="Tours" />
+            <End Role="Reservation" EntitySet="Reservation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tours_Place" Association="Self.FK_Tours_Place">
+            <End Role="Place" EntitySet="Place" />
+            <End Role="Tours" EntitySet="Tours" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="thuctapProjectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Continent">
+          <Key>
+            <PropertyRef Name="idC" />
+          </Key>
+          <Property Name="idC" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Places" Relationship="Self.FK_Place_Continents" FromRole="Continents" ToRole="Place" />
+        </EntityType>
+        <EntityType Name="LOGIN">
+          <Key>
+            <PropertyRef Name="username" />
+          </Key>
+          <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="mod" Type="Boolean" />
+          <Property Name="email" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Reservations" Relationship="thuctapProjectModel.FK_Reservation_Login" FromRole="LOGIN" ToRole="Reservation" />
+        </EntityType>
+        <EntityType Name="Place">
+          <Key>
+            <PropertyRef Name="idP" />
+          </Key>
+          <Property Name="idP" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="url" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="price" Type="Int32" />
+          <Property Name="area" Type="Double" />
+          <Property Name="followers" Type="Double" />
+          <Property Name="idC" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Continent" Relationship="Self.FK_Place_Continents" FromRole="Place" ToRole="Continents" />
+          <NavigationProperty Name="Tours" Relationship="Self.FK_Tours_Place" FromRole="Place" ToRole="Tours" />
+        </EntityType>
+        <EntityType Name="Tour">
+          <Key>
+            <PropertyRef Name="idTuor" />
+          </Key>
+          <Property Name="idTuor" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="destination" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="followers" Type="Double" />
+          <Property Name="price_pPerson" Type="Double" />
+          <Property Name="url" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="detailDeal" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="idP" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Place" Relationship="Self.FK_Tours_Place" FromRole="Tours" ToRole="Place" />
+          <Property Name="thumbCityUrl" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Reservations" Relationship="thuctapProjectModel.FK_Reservation_Tours" FromRole="Tour" ToRole="Reservation" />
+        </EntityType>
+        <Association Name="FK_Place_Continents">
+          <End Role="Continents" Type="Self.Continent" Multiplicity="1" />
+          <End Role="Place" Type="Self.Place" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Continents">
+              <PropertyRef Name="idC" />
+            </Principal>
+            <Dependent Role="Place">
+              <PropertyRef Name="idC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tours_Place">
+          <End Role="Place" Type="Self.Place" Multiplicity="1" />
+          <End Role="Tours" Type="Self.Tour" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="idP" />
+            </Principal>
+            <Dependent Role="Tours">
+              <PropertyRef Name="idP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="thuctapProjectEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Continents" EntityType="Self.Continent" />
+          <EntitySet Name="LOGINs" EntityType="Self.LOGIN" />
+          <EntitySet Name="Places" EntityType="Self.Place" />
+          <EntitySet Name="Tours" EntityType="Self.Tour" />
+          <AssociationSet Name="FK_Place_Continents" Association="Self.FK_Place_Continents">
+            <End Role="Continents" EntitySet="Continents" />
+            <End Role="Place" EntitySet="Places" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tours_Place" Association="Self.FK_Tours_Place">
+            <End Role="Place" EntitySet="Places" />
+            <End Role="Tours" EntitySet="Tours" />
+          </AssociationSet>
+          <EntitySet Name="Reservations" EntityType="thuctapProjectModel.Reservation" />
+          <AssociationSet Name="FK_Reservation_Login" Association="thuctapProjectModel.FK_Reservation_Login">
+            <End Role="LOGIN" EntitySet="LOGINs" />
+            <End Role="Reservation" EntitySet="Reservations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservation_Tours" Association="thuctapProjectModel.FK_Reservation_Tours">
+            <End Role="Tour" EntitySet="Tours" />
+            <End Role="Reservation" EntitySet="Reservations" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Reservation">
+          <Key>
+            <PropertyRef Name="idR" />
+          </Key>
+          <Property Name="idR" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="numOfPeople" Type="Int32" />
+          <Property Name="date" Type="DateTime" Precision="0" />
+          <Property Name="idTour" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="LOGIN" Relationship="thuctapProjectModel.FK_Reservation_Login" FromRole="Reservation" ToRole="LOGIN" />
+          <NavigationProperty Name="Tour" Relationship="thuctapProjectModel.FK_Reservation_Tours" FromRole="Reservation" ToRole="Tour" />
+        </EntityType>
+        <Association Name="FK_Reservation_Login">
+          <End Type="thuctapProjectModel.LOGIN" Role="LOGIN" Multiplicity="0..1" />
+          <End Type="thuctapProjectModel.Reservation" Role="Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOGIN">
+              <PropertyRef Name="username" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservation_Tours">
+          <End Type="thuctapProjectModel.Tour" Role="Tour" Multiplicity="0..1" />
+          <End Type="thuctapProjectModel.Reservation" Role="Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tour">
+              <PropertyRef Name="idTuor" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="idTour" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="thuctapProjectModelStoreContainer" CdmEntityContainer="thuctapProjectEntities">
+          <EntitySetMapping Name="Continents">
+            <EntityTypeMapping TypeName="thuctapProjectModel.Continent">
+              <MappingFragment StoreEntitySet="Continents">
+                <ScalarProperty Name="idC" ColumnName="idC" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LOGINs">
+            <EntityTypeMapping TypeName="thuctapProjectModel.LOGIN">
+              <MappingFragment StoreEntitySet="LOGIN">
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="mod" ColumnName="mod" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Places">
+            <EntityTypeMapping TypeName="thuctapProjectModel.Place">
+              <MappingFragment StoreEntitySet="Place">
+                <ScalarProperty Name="idP" ColumnName="idP" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="area" ColumnName="area" />
+                <ScalarProperty Name="followers" ColumnName="followers" />
+                <ScalarProperty Name="idC" ColumnName="idC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tours">
+            <EntityTypeMapping TypeName="thuctapProjectModel.Tour">
+              <MappingFragment StoreEntitySet="Tours">
+                <ScalarProperty Name="thumbCityUrl" ColumnName="thumbCityUrl" />
+                <ScalarProperty Name="idTuor" ColumnName="idTuor" />
+                <ScalarProperty Name="destination" ColumnName="destination" />
+                <ScalarProperty Name="followers" ColumnName="followers" />
+                <ScalarProperty Name="price_pPerson" ColumnName="price_pPerson" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="detailDeal" ColumnName="detailDeal" />
+                <ScalarProperty Name="idP" ColumnName="idP" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reservations">
+            <EntityTypeMapping TypeName="thuctapProjectModel.Reservation">
+              <MappingFragment StoreEntitySet="Reservation">
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="idTour" ColumnName="idTour" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="numOfPeople" ColumnName="numOfPeople" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="fullName" ColumnName="fullName" />
+                <ScalarProperty Name="idR" ColumnName="idR" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

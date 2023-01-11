@@ -1,0 +1,261 @@
+﻿@model VNPT_TTS_PROJECT.Models.Place
+@{
+    ViewBag.Title = "About";
+    ViewBag.ActiveAbout = "active";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    VNPT_TTS_PROJECT.Models.thuctapProjectEntities db = new VNPT_TTS_PROJECT.Models.thuctapProjectEntities();
+    List<VNPT_TTS_PROJECT.Models.Tour> dsTour = Model.Tours.ToList();
+}
+    <!-- ***** Main Banner Area Start ***** -->
+    <div class="about-main-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="content">
+                        <div class="blur-bg"></div>
+                        <h4>Khám Phá Đất Nước Của Chúng Ta</h4>
+                        <div class="line-dec"></div>
+                        <h2>
+                            Chào mừng đến @Model.title
+                        </h2>
+                        <p>@Model.description</p>
+                        @*<div class="main-button">
+                            <a href="reservation.html">Discover More</a>
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ***** Main Banner Area End ***** -->
+
+    <div class="cities-town">
+        <div class="container">
+            <div class="row">
+                <div class="slider-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2>@Model.title’s <em>Cities &amp; Towns</em></h2>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="owl-cites-town owl-carousel">
+                                @{
+                                    foreach (var item in dsTour)
+                                    {
+                                        <div class="item">
+                                            <div class="thumb">
+                                                <img src="~/Assets/@item.thumbCityUrl" alt="">
+                                                <h4>
+                                                    @item.destination
+
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    }
+                                    foreach (var item in dsTour)
+                                    {
+                                        <div class="item">
+                                            <div class="thumb">
+                                                <img src="~/Assets/@item.thumbCityUrl" alt="">
+                                                <h4>
+                                                    @item.destination
+
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="weekly-offers">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3">
+                    <div class="section-heading text-center">
+                        <h2>Best Weekly Offers In Each City</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="owl-weekly-offers owl-carousel">
+                        @{
+                            foreach (var item in dsTour)
+                            {
+                                string[] deal = @item.detailDeal.Split('|'); ;
+                                <div class="item">
+                                    <div class="thumb">
+                                        <img src="~/Assets/@item.url" alt="">
+                                        <div class="text">
+                                            <h4>@item.destination<br><span><i class="fa fa-users"></i> @item.followers Check Ins</span></h4>
+                                            <h6>$@item.price_pPerson<br><span>/person</span></h6>
+                                            <div class="line-dec"></div>
+                                            <ul>   
+                                                <li>Deal Includes:</li>
+                                                <li><i class="fa fa-taxi"></i>@deal[0]</li>
+                                                <li><i class="fa fa-plane"></i> @deal[1]</li>
+                                                <li><i class="fa fa-building"></i> @deal[2]</li>
+                                            </ul>
+                                            <div class="main-button">
+                                                <a href="~/Home/Reservation?idTour=@item.idTuor">Make a Reservation</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="more-about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 align-self-center">
+                    <div class="left-image">
+                        <img src="~/Assets/assets/images/about-left-image.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="section-heading">
+                        <h2>Discover More About Our Country</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="info-item">
+                                <h4>150.640 +</h4>
+                                <span>Total Guests Yearly</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="info-item">
+                                <h4>175.000+</h4>
+                                <span>Amazing Accomoditations</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="info-item">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <h4>12.560+</h4>
+                                        <span>Amazing Places</span>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <h4>240.580+</h4>
+                                        <span>Different Check-ins Yearly</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                    @*<div class="main-button">
+                        <a href="reservation.html">Discover More</a>
+                    </div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*<div class="best-locations">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3">
+                    <div class="section-heading text-center">
+                        <h2>Best Locations In Caribbeans</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                    </div>
+                </div>
+                <div class="col-lg-8 offset-lg-2">
+                    <div class="options">
+                        <div class="option active" style="--optionBackground:url(https://buttoncreatives.com/html/woox/~/Assets/assets/images/best-01.jpg);">
+                            <div class="shadow"></div>
+                            <div class="label">
+                                <div class="icon">
+                                    <i class="fas fa-expand"></i>
+                                </div>
+                                <div class="info">
+                                    <div class="main">Havana</div>
+                                    <div class="sub">Population: 2M</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="option" style="--optionBackground:url(https://buttoncreatives.com/html/woox/~/Assets/assets/images/best-02.jpg);">
+                            <div class="shadow"></div>
+                            <div class="label">
+                                <div class="icon">
+                                    <i class="fas fa-expand"></i>
+                                </div>
+                                <div class="info">
+                                    <div class="main">Kingston</div>
+                                    <div class="sub">Population: 3.5M</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="option" style="--optionBackground:url(https://buttoncreatives.com/html/woox/~/Assets/assets/images/best-03.jpg);">
+                            <div class="shadow"></div>
+                            <div class="label">
+                                <div class="icon">
+                                    <i class="fas fa-expand"></i>
+                                </div>
+                                <div class="info">
+                                    <div class="main">London</div>
+                                    <div class="sub">Population: 4.1M</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="option" style="--optionBackground:url(https://buttoncreatives.com/html/woox/~/Assets/assets/images/best-04.jpg);">
+                            <div class="shadow"></div>
+                            <div class="label">
+                                <div class="icon">
+                                    <i class="fas fa-expand"></i>
+                                </div>
+                                <div class="info">
+                                    <div class="main">Pristina</div>
+                                    <div class="sub">Population: 520K</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="option" style="--optionBackground:url(https://buttoncreatives.com/html/woox/~/Assets/assets/images/best-05.jpg);">
+                            <div class="shadow"></div>
+                            <div class="label">
+                                <div class="icon">
+                                    <i class="fas fa-expand"></i>
+                                </div>
+                                <div class="info">
+                                    <div class="main">Paris</div>
+                                    <div class="sub">Population: 3M</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="main-button text-center">
+                        <a href="deals.html">Discover All Places</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+@section Scripts{
+    <script>
+        $(".option").click(function () {
+            $(".option").removeClass("active");
+            $(this).addClass("active");
+        });
+    </script>
+}
